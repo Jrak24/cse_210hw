@@ -1,15 +1,38 @@
-public class ListingActivity : MindfulnessActivity
-{
-    public override string ActivityName => "Listing Activity";
-    public override string Description => "List things you are grateful for.";
+using System;
 
-    protected override void ExecuteActivity()
+class ListingActivity : MindfulnessActivity
+{
+    private static readonly string[] Prompts = 
     {
-        Console.WriteLine("Start listing things you are grateful for:");
-        for (int i = 0; i < duration / 10; i++) // Assuming 10 seconds per item
+        "Who are people that you appreciate?",
+        "What are personal strengths of yours?",
+        "Who are people that you have helped this week?",
+        "Who are some of your personal heroes?"
+    };
+
+    public ListingActivity() : base("Listing Activity", 
+        "This activity will help you reflect on the good things in your life by listing them.")
+    {
+    }
+
+    public override void ExecuteActivity()
+    {
+        Random random = new Random();
+        string prompt = Prompts[random.Next(Prompts.Length)];
+        Console.WriteLine(prompt);
+        Pause(5);
+
+        Console.WriteLine("Start listing now! Press Enter for each item.");
+        DateTime endTime = DateTime.Now.AddSeconds(Duration);
+        int count = 0;
+
+        while (DateTime.Now < endTime)
         {
-            Console.WriteLine($"Item {i + 1}: ");
-            Console.ReadLine(); // User inputs their gratitude item
+            Console.ReadLine();
+            count++;
         }
+
+        Console.WriteLine($"You listed {count} items.");
+        EndActivity();
     }
 }

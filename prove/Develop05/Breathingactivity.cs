@@ -1,13 +1,22 @@
-public class BreathingActivity : MindfulnessActivity
-{
-    public override string ActivityName => "Breathing Activity";
-    public override string Description => "Focus on your breathing for a few minutes.";
+using System;
 
-    protected override void ExecuteActivity()
+class BreathingActivity : MindfulnessActivity
+{
+    public BreathingActivity() : base("Breathing Activity", 
+        "This activity will help you relax by walking you through breathing in and out slowly. Clear your mind and focus on your breathing.")
     {
-        Console.WriteLine("Breathe in... (hold for 4 seconds)");
-        Pause(4);
-        Console.WriteLine("Breathe out... (hold for 4 seconds)");
-        Pause(4);
+    }
+
+    public override void ExecuteActivity()
+    {
+        DateTime endTime = DateTime.Now.AddSeconds(Duration);
+        while (DateTime.Now < endTime)
+        {
+            Console.WriteLine("Breathe in...");
+            Pause(4);
+            Console.WriteLine("Breathe out...");
+            Pause(4);
+        }
+        EndActivity();
     }
 }
